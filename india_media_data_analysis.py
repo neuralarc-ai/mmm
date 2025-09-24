@@ -5,8 +5,6 @@ Comprehensive data processing and ROI calculations for TV and Digital platforms
 Focus on Jio/Hotstar vs competitors analysis
 """
 
-import pandas as pd
-import numpy as np
 import json
 from datetime import datetime, timedelta
 
