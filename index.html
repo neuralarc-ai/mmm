@@ -6,8 +6,6 @@
     <title>India Media Mix Model Dashboard - Jio/Hotstar Investment Analysis</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/controls/OrbitControls.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -42,10 +40,11 @@
     <nav class="nav-tabs">
         <div class="container">
             <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="overview">Market Overview</button>
+                <button class="tab-btn active" data-tab="executive-summary">Executive Summary</button>
+                <button class="tab-btn" data-tab="overview">Market Overview</button>
+                <button class="tab-btn" data-tab="interactive-roi">Interactive ROI Calculator</button>
                 <button class="tab-btn" data-tab="roi-analysis">ROI Analysis</button>
                 <button class="tab-btn" data-tab="platform-comparison">Platform Comparison</button>
-                <button class="tab-btn" data-tab="3d-visualization">3D Visualization</button>
                 <button class="tab-btn" data-tab="investment-insights">Investment Insights</button>
                 <button class="tab-btn" data-tab="mmm-framework">MMM Framework</button>
             </div>
@@ -56,8 +55,445 @@
     <main class="main-content">
         <div class="container">
             
+            <!-- Executive Summary Tab -->
+            <div id="executive-summary" class="tab-content active">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Executive Summary</h2>
+                    <p>Key insights and recommendations for India Media Investment Strategy</p>
+                </div>
+
+                <!-- Key Metrics Row -->
+                <div class="executive-metrics">
+                    <div class="executive-metric primary">
+                        <div class="metric-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Investment Recommendation</h3>
+                            <div class="metric-value">JioHotstar</div>
+                            <div class="metric-subtitle">AAA Investment Grade</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-star"></i> Highest Grade
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="executive-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Projected ROI</h3>
+                            <div class="metric-value">195%</div>
+                            <div class="metric-subtitle">vs Market Average</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> Superior Returns
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="executive-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-globe-asia"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Market Position</h3>
+                            <div class="metric-value">#1</div>
+                            <div class="metric-subtitle">Market Leader</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-crown"></i> 31% Share
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="executive-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Growth Rate</h3>
+                            <div class="metric-value">87%</div>
+                            <div class="metric-subtitle">Post-Merger Growth</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> Exponential
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Insights -->
+                <div class="executive-insights">
+                    <div class="insight-section">
+                        <h3><i class="fas fa-lightbulb"></i> Strategic Insights</h3>
+                        <div class="insights-grid">
+                            <div class="insight-item">
+                                <div class="insight-icon">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Digital Dominance</h4>
+                                    <p>Digital advertising has officially surpassed television, capturing 41% of total ad spend vs TV's 33% share.</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Mobile-First Advantage</h4>
+                                    <p>96% mobile internet usage in India gives JioHotstar a 30% competitive advantage with mobile-optimized platform.</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">
+                                    <i class="fas fa-football-ball"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Sports Content Premium</h4>
+                                    <p>Exclusive IPL and cricket rights drive 40% premium in advertising rates, creating significant revenue advantage.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-section">
+                        <h3><i class="fas fa-bullseye"></i> Investment Recommendation</h3>
+                        <div class="recommendation-card">
+                            <div class="recommendation-header">
+                                <h4>JioHotstar - AAA Investment Grade</h4>
+                                <div class="recommendation-grade">AAA</div>
+                            </div>
+                            <div class="recommendation-reasons">
+                                <div class="reason-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Market leadership with 31% share and 600M users</span>
+                                </div>
+                                <div class="reason-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Superior ROI multiplier of 1.95x vs competitors</span>
+                                </div>
+                                <div class="reason-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Technical excellence with 61.2M peak concurrency</span>
+                                </div>
+                                <div class="reason-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Exponential growth trajectory post-merger</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Items -->
+                <div class="action-items">
+                    <h3><i class="fas fa-tasks"></i> Recommended Actions</h3>
+                    <div class="actions-grid">
+                        <div class="action-item priority-high">
+                            <div class="action-priority">High Priority</div>
+                            <h4>Immediate Investment</h4>
+                            <p>Recommend immediate investment in JioHotstar given AAA grade and superior market position.</p>
+                        </div>
+                        <div class="action-item priority-medium">
+                            <div class="action-priority">Medium Priority</div>
+                            <h4>Monitor Competition</h4>
+                            <p>Track Amazon Prime and Netflix performance as secondary investment opportunities.</p>
+                        </div>
+                        <div class="action-item priority-low">
+                            <div class="action-priority">Low Priority</div>
+                            <h4>Regional Expansion</h4>
+                            <p>Consider regional content partnerships to strengthen market position.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="export-section">
+                    <h3><i class="fas fa-download"></i> Export Options</h3>
+                    <div class="export-buttons">
+                        <button class="export-btn pdf-btn" onclick="exportToPDF()">
+                            <i class="fas fa-file-pdf"></i> Export Executive Summary (PDF)
+                        </button>
+                        <button class="export-btn excel-btn" onclick="exportToExcel()">
+                            <i class="fas fa-file-excel"></i> Export Data (Excel)
+                        </button>
+                        <button class="export-btn presentation-btn" onclick="togglePresentationMode()">
+                            <i class="fas fa-presentation"></i> Presentation Mode
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interactive ROI Calculator Tab -->
+            <div id="interactive-roi" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-calculator"></i> Interactive ROI Calculator</h2>
+                    <p>Real-time investment analysis with dynamic visualizations and scenario modeling</p>
+                </div>
+
+                <!-- Calculator Controls -->
+                <div class="calculator-dashboard">
+                    <div class="calculator-main">
+                        <div class="calculator-controls-advanced">
+                            <div class="control-section">
+                                <h3><i class="fas fa-money-bill-wave"></i> Investment Parameters</h3>
+                                <div class="controls-grid">
+                                    <div class="control-group">
+                                        <label for="investmentAmount">Investment Amount (₹ Crores)</label>
+                                        <div class="slider-container">
+                                            <input type="range" id="investmentAmount" min="100" max="10000" value="1000" step="100">
+                                            <div class="slider-value" id="investmentAmountValue">₹1,000 Cr</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label for="investmentPeriod">Investment Period (Years)</label>
+                                        <div class="slider-container">
+                                            <input type="range" id="investmentPeriod" min="1" max="10" value="3" step="1">
+                                            <div class="slider-value" id="investmentPeriodValue">3 Years</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label for="riskTolerance">Risk Tolerance</label>
+                                        <select id="riskTolerance">
+                                            <option value="conservative">Conservative (Lower Risk)</option>
+                                            <option value="moderate" selected>Moderate (Balanced)</option>
+                                            <option value="aggressive">Aggressive (Higher Risk)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-section">
+                                <h3><i class="fas fa-chart-line"></i> Platform Selection</h3>
+                                <div class="platform-selector">
+                                    <div class="platform-option selected" data-platform="jiohotstar">
+                                        <div class="platform-icon jiohotstar"></div>
+                                        <div class="platform-details">
+                                            <h4>JioHotstar</h4>
+                                            <div class="platform-stats">
+                                                <span class="roi-badge">1.95x ROI</span>
+                                                <span class="grade-badge aaa">AAA</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="platform-option" data-platform="amazon">
+                                        <div class="platform-icon amazon"></div>
+                                        <div class="platform-details">
+                                            <h4>Amazon Prime</h4>
+                                            <div class="platform-stats">
+                                                <span class="roi-badge">1.40x ROI</span>
+                                                <span class="grade-badge aa">AA</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="platform-option" data-platform="netflix">
+                                        <div class="platform-icon netflix"></div>
+                                        <div class="platform-details">
+                                            <h4>Netflix</h4>
+                                            <div class="platform-stats">
+                                                <span class="roi-badge">1.20x ROI</span>
+                                                <span class="grade-badge a">A</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-section">
+                                <h3><i class="fas fa-sliders-h"></i> Scenario Modeling</h3>
+                                <div class="scenario-controls">
+                                    <div class="control-group">
+                                        <label for="marketGrowth">Market Growth Factor (%)</label>
+                                        <div class="slider-container">
+                                            <input type="range" id="marketGrowth" min="-20" max="50" value="29" step="1">
+                                            <div class="slider-value" id="marketGrowthValue">+29%</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label for="competitionFactor">Competition Impact (%)</label>
+                                        <div class="slider-container">
+                                            <input type="range" id="competitionFactor" min="-30" max="10" value="-5" step="1">
+                                            <div class="slider-value" id="competitionFactorValue">-5%</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label for="regulatoryRisk">Regulatory Risk Factor (%)</label>
+                                        <div class="slider-container">
+                                            <input type="range" id="regulatoryRisk" min="-25" max="5" value="-2" step="1">
+                                            <div class="slider-value" id="regulatoryRiskValue">-2%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-time Results -->
+                    <div class="calculator-results-advanced">
+                        <div class="results-header">
+                            <h3><i class="fas fa-chart-pie"></i> Investment Analysis Results</h3>
+                            <div class="results-timestamp" id="resultsTimestamp">Updated: Just now</div>
+                        </div>
+                        
+                        <div class="results-dashboard">
+                            <div class="result-card primary">
+                                <div class="result-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="result-content">
+                                    <h4>Total Returns</h4>
+                                    <div class="result-value" id="totalReturns">₹1,950 Cr</div>
+                                    <div class="result-change positive" id="returnsChange">+95% gain</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="result-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="result-content">
+                                    <h4>Net Profit</h4>
+                                    <div class="result-value" id="netProfit">₹950 Cr</div>
+                                    <div class="result-change positive" id="profitMargin">48.7% margin</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="result-icon">
+                                    <i class="fas fa-percentage"></i>
+                                </div>
+                                <div class="result-content">
+                                    <h4>Annual ROI</h4>
+                                    <div class="result-value" id="annualROI">31.7%</div>
+                                    <div class="result-change positive" id="roiComparison">vs 12% market avg</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="result-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="result-content">
+                                    <h4>Risk Score</h4>
+                                    <div class="result-value" id="riskScore">Low</div>
+                                    <div class="result-change positive" id="riskLevel">AAA Grade</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Charts -->
+                <div class="interactive-charts">
+                    <div class="chart-section">
+                        <div class="chart-container interactive">
+                            <h3>ROI Projection Over Time</h3>
+                            <canvas id="roiProjectionChart"></canvas>
+                        </div>
+                        
+                        <div class="chart-container interactive">
+                            <h3>Risk vs Return Analysis</h3>
+                            <canvas id="riskReturnChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-section">
+                        <div class="chart-container interactive">
+                            <h3>Investment Breakdown</h3>
+                            <canvas id="investmentBreakdownChart"></canvas>
+                        </div>
+                        
+                        <div class="chart-container interactive">
+                            <h3>Scenario Comparison</h3>
+                            <canvas id="scenarioComparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario Analysis -->
+                <div class="scenario-analysis">
+                    <h3><i class="fas fa-analytics"></i> Scenario Analysis</h3>
+                    <div class="scenario-cards">
+                        <div class="scenario-card optimistic">
+                            <div class="scenario-header">
+                                <h4><i class="fas fa-arrow-up"></i> Best Case</h4>
+                                <div class="scenario-probability">25% Probability</div>
+                            </div>
+                            <div class="scenario-metrics">
+                                <div class="scenario-metric">
+                                    <span class="metric-label">Returns</span>
+                                    <span class="metric-value" id="bestCaseReturns">₹2,340 Cr</span>
+                                </div>
+                                <div class="scenario-metric">
+                                    <span class="metric-label">ROI</span>
+                                    <span class="metric-value" id="bestCaseROI">134%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="scenario-card realistic">
+                            <div class="scenario-header">
+                                <h4><i class="fas fa-equals"></i> Most Likely</h4>
+                                <div class="scenario-probability">50% Probability</div>
+                            </div>
+                            <div class="scenario-metrics">
+                                <div class="scenario-metric">
+                                    <span class="metric-label">Returns</span>
+                                    <span class="metric-value" id="realisticReturns">₹1,950 Cr</span>
+                                </div>
+                                <div class="scenario-metric">
+                                    <span class="metric-label">ROI</span>
+                                    <span class="metric-value" id="realisticROI">95%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="scenario-card pessimistic">
+                            <div class="scenario-header">
+                                <h4><i class="fas fa-arrow-down"></i> Worst Case</h4>
+                                <div class="scenario-probability">25% Probability</div>
+                            </div>
+                            <div class="scenario-metrics">
+                                <div class="scenario-metric">
+                                    <span class="metric-label">Returns</span>
+                                    <span class="metric-value" id="worstCaseReturns">₹1,560 Cr</span>
+                                </div>
+                                <div class="scenario-metric">
+                                    <span class="metric-label">ROI</span>
+                                    <span class="metric-value" id="worstCaseROI">56%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Panel -->
+                <div class="action-panel">
+                    <div class="action-buttons">
+                        <button class="action-btn primary" onclick="generateInvestmentReport()">
+                            <i class="fas fa-file-contract"></i> Generate Investment Report
+                        </button>
+                        <button class="action-btn secondary" onclick="compareAllPlatforms()">
+                            <i class="fas fa-balance-scale"></i> Compare All Platforms
+                        </button>
+                        <button class="action-btn tertiary" onclick="shareCalculation()">
+                            <i class="fas fa-share-alt"></i> Share Calculation
+                        </button>
+                        <button class="action-btn reset" onclick="resetCalculator()">
+                            <i class="fas fa-redo"></i> Reset Calculator
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Overview Tab -->
-            <div id="overview" class="tab-content active">
+            <div id="overview" class="tab-content">
                 <div class="section-header">
                     <h2><i class="fas fa-globe-asia"></i> India Media Landscape Overview</h2>
                     <p>Comprehensive analysis of India's $30B media market with focus on digital transformation</p>
@@ -361,45 +797,6 @@
                 </div>
             </div>
 
-            <!-- 3D Visualization Tab -->
-            <div id="3d-visualization" class="tab-content">
-                <div class="section-header">
-                    <h2><i class="fas fa-cube"></i> 3D Market Visualization</h2>
-                    <p>Interactive 3D representation of market dynamics and platform performance</p>
-                </div>
-
-                <div class="visualization-controls">
-                    <button class="viz-btn active" data-viz="market-cube">Market Cube</button>
-                    <button class="viz-btn" data-viz="roi-sphere">ROI Sphere</button>
-                    <button class="viz-btn" data-viz="growth-tower">Growth Tower</button>
-                </div>
-
-                <div class="viz-container">
-                    <div id="threejs-container"></div>
-                    <div class="viz-info">
-                        <h4 id="vizTitle">Market Share 3D Cube</h4>
-                        <p id="vizDescription">Interactive 3D visualization showing relative market positions and performance metrics</p>
-                        <div class="viz-legend">
-                            <div class="legend-item jiohotstar">
-                                <span class="legend-color"></span>
-                                <span>JioHotstar - Market Leader</span>
-                            </div>
-                            <div class="legend-item amazon">
-                                <span class="legend-color"></span>
-                                <span>Amazon Prime - Strong Competitor</span>
-                            </div>
-                            <div class="legend-item netflix">
-                                <span class="legend-color"></span>
-                                <span>Netflix - Premium Player</span>
-                            </div>
-                            <div class="legend-item others">
-                                <span class="legend-color"></span>
-                                <span>Others - Niche Players</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Investment Insights Tab -->
             <div id="investment-insights" class="tab-content">
