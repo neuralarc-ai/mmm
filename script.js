@@ -4,8 +4,6 @@
  */
 
 // Global variables
-let scene, camera, renderer, controls;
-let currentVisualization = 'market-cube';
 let charts = {};
 
 // Data from analysis
@@ -57,13 +55,193 @@ const platformData = {
     }
 };
 
+// Export and Presentation Functions
+function exportToPDF() {
+    // Create a simple PDF export using browser's print functionality
+    const printWindow = window.open('', '_blank');
+    const executiveSummary = document.getElementById('executive-summary').innerHTML;
+    
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Executive Summary - India Media Investment Analysis</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 20px; }
+                    .executive-metric { border: 1px solid #ddd; padding: 20px; margin: 10px 0; border-radius: 8px; }
+                    .metric-value { font-size: 2rem; font-weight: bold; color: #EE5441; }
+                    .recommendation-card { border: 2px solid #EE5441; padding: 20px; margin: 20px 0; }
+                    .action-item { border-left: 4px solid #ddd; padding: 15px; margin: 10px 0; }
+                    .priority-high { border-left-color: #E53E3E; }
+                    .priority-medium { border-left-color: #D69E2E; }
+                    .priority-low { border-left-color: #38A169; }
+                </style>
+            </head>
+            <body>
+                <h1>Executive Summary - India Media Investment Analysis</h1>
+                ${executiveSummary}
+            </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    printWindow.print();
+}
+
+function exportToExcel() {
+    // Create Excel export using CSV format
+    const data = [
+        ['Platform', 'Market Share (%)', 'ROI Multiplier', 'Growth Rate (%)', 'Investment Grade'],
+        ['JioHotstar', '31', '1.95', '87', 'AAA'],
+        ['Amazon Prime', '23', '1.40', '25', 'AA'],
+        ['Netflix', '16', '1.20', '49', 'A'],
+        ['Zee5', '11', '1.15', '15', 'BBB'],
+        ['Sony LIV', '4', '1.10', '10', 'BB']
+    ];
+    
+    const csvContent = data.map(row => row.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'india_media_analysis.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+function togglePresentationMode() {
+    const body = document.body;
+    const isPresentationMode = body.classList.contains('presentation-mode');
+    
+    if (isPresentationMode) {
+        body.classList.remove('presentation-mode');
+        // Restore normal view
+        document.exitFullscreen?.();
+    } else {
+        body.classList.add('presentation-mode');
+        // Try to enter fullscreen
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        }
+    }
+}
+
+// Add loading states
+function showLoading(element) {
+    element.innerHTML = '<div class="loading"></div>';
+}
+
+function hideLoading(element, content) {
+    element.innerHTML = content;
+}
+
+// Enhanced mobile responsiveness
+function enhanceMobileExperience() {
+    // Add touch-friendly interactions
+    const buttons = document.querySelectorAll('.tab-btn, .export-btn');
+    buttons.forEach(button => {
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        button.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // Improve chart responsiveness on mobile
+    const charts = document.querySelectorAll('canvas');
+    charts.forEach(chart => {
+        chart.style.maxWidth = '100%';
+        chart.style.height = 'auto';
+    });
+}
+
+// Add data refresh functionality
+function addDataRefresh() {
+    const header = document.querySelector('.header');
+    const refreshButton = document.createElement('button');
+    refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
+    refreshButton.className = 'refresh-btn';
+    refreshButton.style.cssText = `
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-left: 20px;
+        transition: all 0.2s ease;
+    `;
+    
+    refreshButton.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
+            this.disabled = false;
+            // Refresh charts
+            Object.values(charts).forEach(chart => {
+                if (chart && typeof chart.update === 'function') {
+                    chart.update();
+                }
+            });
+        }, 2000);
+    });
+    
+    const headerContent = header.querySelector('.header-content');
+    headerContent.appendChild(refreshButton);
+}
+
+// Initialize enhanced features
+function initializeClientFeatures() {
+    enhanceMobileExperience();
+    addDataRefresh();
+    
+    // Add keyboard shortcuts for presentation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F11' || (e.altKey && e.key === 'p')) {
+            e.preventDefault();
+            togglePresentationMode();
+        }
+        if (e.altKey && e.key === 'e') {
+            e.preventDefault();
+            exportToPDF();
+        }
+    });
+    
+    // Add data timestamp
+    const footer = document.querySelector('.footer-bottom');
+    const timestamp = document.createElement('div');
+    timestamp.innerHTML = `Last updated: ${new Date().toLocaleString()}`;
+    timestamp.style.cssText = 'font-size: 0.75rem; color: var(--text-light); margin-top: 10px;';
+    footer.appendChild(timestamp);
+}
+
+// Interactive ROI Calculator Data
+let calculatorData = {
+    currentPlatform: 'jiohotstar',
+    investmentAmount: 1000,
+    investmentPeriod: 3,
+    riskTolerance: 'moderate',
+    marketGrowth: 29,
+    competitionFactor: -5,
+    regulatoryRisk: -2,
+    platformMultipliers: {
+        jiohotstar: 1.95,
+        amazon: 1.40,
+        netflix: 1.20
+    }
+};
+
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', function() {
     initializeTabs();
     initializeCharts();
     initializeROICalculator();
-    initialize3DVisualization();
+    initializeAdvancedROICalculator();
     initializeAnimations();
+    initializeClientFeatures();
 });
 
 // Tab functionality
@@ -402,284 +580,6 @@ function initializeROICalculator() {
     updateCalculations();
 }
 
-// 3D Visualization
-function initialize3DVisualization() {
-    const container = document.getElementById('threejs-container');
-    if (!container) return;
-
-    // Scene setup
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf8f9fa);
-
-    // Camera setup
-    camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.set(5, 5, 5);
-
-    // Renderer setup
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    container.appendChild(renderer.domElement);
-
-    // Controls
-    if (typeof THREE.OrbitControls !== 'undefined') {
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-    }
-
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(10, 10, 5);
-    directionalLight.castShadow = true;
-    scene.add(directionalLight);
-
-    // Initialize with market cube
-    createMarketCube();
-
-    // Visualization controls
-    const vizButtons = document.querySelectorAll('.viz-btn');
-    vizButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const vizType = button.getAttribute('data-viz');
-            
-            vizButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            
-            switchVisualization(vizType);
-        });
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', onWindowResize);
-
-    // Start animation loop
-    animate();
-}
-
-function createMarketCube() {
-    // Clear existing objects
-    clearScene();
-
-    const platforms = Object.entries(platformData);
-    const spacing = 2;
-    
-    platforms.forEach(([name, data], index) => {
-        // Create cube with size based on market share
-        const size = (data.marketShare / 31) * 1.5 + 0.5; // Normalize to JioHotstar
-        const geometry = new THREE.BoxGeometry(size, size, size);
-        const material = new THREE.MeshLambertMaterial({ 
-            color: data.color,
-            transparent: true,
-            opacity: 0.8
-        });
-        
-        const cube = new THREE.Mesh(geometry, material);
-        
-        // Position cubes in a circle
-        const angle = (index / platforms.length) * Math.PI * 2;
-        cube.position.x = Math.cos(angle) * 3;
-        cube.position.z = Math.sin(angle) * 3;
-        cube.position.y = size / 2;
-        
-        // Add rotation animation
-        cube.userData = { 
-            rotationSpeed: data.growthRate / 1000,
-            originalY: cube.position.y,
-            name: name
-        };
-        
-        cube.castShadow = true;
-        cube.receiveShadow = true;
-        scene.add(cube);
-
-        // Add text label
-        createTextLabel(name, cube.position.x, cube.position.y + size/2 + 0.5, cube.position.z);
-    });
-
-    // Add ground plane
-    const groundGeometry = new THREE.PlaneGeometry(10, 10);
-    const groundMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = -Math.PI / 2;
-    ground.receiveShadow = true;
-    scene.add(ground);
-
-    updateVizInfo('Market Share 3D Cube', 'Interactive 3D visualization showing relative market positions. Cube sizes represent market share, with JioHotstar leading at 31%.');
-}
-
-function createROISphere() {
-    clearScene();
-
-    const platforms = Object.entries(platformData);
-    
-    platforms.forEach(([name, data], index) => {
-        // Create sphere with size based on ROI multiplier
-        const radius = data.roiMultiplier * 0.5;
-        const geometry = new THREE.SphereGeometry(radius, 32, 32);
-        const material = new THREE.MeshLambertMaterial({ 
-            color: data.color,
-            transparent: true,
-            opacity: 0.7
-        });
-        
-        const sphere = new THREE.Mesh(geometry, material);
-        
-        // Position spheres based on performance
-        sphere.position.x = (data.marketShare - 15) / 5;
-        sphere.position.y = data.roiMultiplier;
-        sphere.position.z = (data.growthRate - 40) / 20;
-        
-        sphere.userData = { 
-            floatSpeed: 0.02,
-            floatAmount: 0.3,
-            originalY: sphere.position.y,
-            name: name
-        };
-        
-        sphere.castShadow = true;
-        scene.add(sphere);
-
-        createTextLabel(name, sphere.position.x, sphere.position.y + radius + 0.3, sphere.position.z);
-    });
-
-    updateVizInfo('ROI Performance Sphere', 'Spheres positioned by ROI multiplier (height), market share (X-axis), and growth rate (Z-axis). JioHotstar shows superior positioning.');
-}
-
-function createGrowthTower() {
-    clearScene();
-
-    const platforms = Object.entries(platformData);
-    
-    platforms.forEach(([name, data], index) => {
-        // Create tower with height based on growth rate
-        const height = data.growthRate / 10;
-        const geometry = new THREE.CylinderGeometry(0.3, 0.5, height, 8);
-        const material = new THREE.MeshLambertMaterial({ 
-            color: data.color,
-            transparent: true,
-            opacity: 0.8
-        });
-        
-        const tower = new THREE.Mesh(geometry, material);
-        
-        // Position towers in a line
-        tower.position.x = (index - 2) * 2;
-        tower.position.y = height / 2;
-        tower.position.z = 0;
-        
-        tower.userData = { 
-            pulseSpeed: 0.05,
-            name: name
-        };
-        
-        tower.castShadow = true;
-        tower.receiveShadow = true;
-        scene.add(tower);
-
-        createTextLabel(name, tower.position.x, tower.position.y + height/2 + 0.5, tower.position.z);
-    });
-
-    // Add ground
-    const groundGeometry = new THREE.PlaneGeometry(12, 4);
-    const groundMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = -Math.PI / 2;
-    ground.receiveShadow = true;
-    scene.add(ground);
-
-    updateVizInfo('Growth Rate Tower', 'Tower heights represent growth rates. JioHotstar dominates with 87% growth, significantly outpacing competitors.');
-}
-
-function createTextLabel(text, x, y, z) {
-    // Simple text representation using small cubes (placeholder for actual text)
-    const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x333333 });
-    const label = new THREE.Mesh(geometry, material);
-    label.position.set(x, y, z);
-    scene.add(label);
-}
-
-function switchVisualization(type) {
-    currentVisualization = type;
-    
-    switch(type) {
-        case 'market-cube':
-            createMarketCube();
-            break;
-        case 'roi-sphere':
-            createROISphere();
-            break;
-        case 'growth-tower':
-            createGrowthTower();
-            break;
-    }
-}
-
-function clearScene() {
-    // Remove all meshes from scene
-    const objectsToRemove = [];
-    scene.traverse((child) => {
-        if (child.isMesh) {
-            objectsToRemove.push(child);
-        }
-    });
-    
-    objectsToRemove.forEach((object) => {
-        scene.remove(object);
-        if (object.geometry) object.geometry.dispose();
-        if (object.material) object.material.dispose();
-    });
-}
-
-function updateVizInfo(title, description) {
-    const titleElement = document.getElementById('vizTitle');
-    const descElement = document.getElementById('vizDescription');
-    
-    if (titleElement) titleElement.textContent = title;
-    if (descElement) descElement.textContent = description;
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-
-    // Animate 3D objects
-    scene.traverse((child) => {
-        if (child.isMesh && child.userData) {
-            const data = child.userData;
-            
-            if (data.rotationSpeed) {
-                child.rotation.y += data.rotationSpeed;
-                child.position.y = data.originalY + Math.sin(Date.now() * 0.001) * 0.1;
-            }
-            
-            if (data.floatSpeed) {
-                child.position.y = data.originalY + Math.sin(Date.now() * data.floatSpeed) * data.floatAmount;
-            }
-            
-            if (data.pulseSpeed) {
-                const scale = 1 + Math.sin(Date.now() * data.pulseSpeed) * 0.1;
-                child.scale.set(scale, 1, scale);
-            }
-        }
-    });
-
-    if (controls) controls.update();
-    renderer.render(scene, camera);
-}
-
-function onWindowResize() {
-    const container = document.getElementById('threejs-container');
-    if (!container) return;
-
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
-}
 
 // Refresh charts when tabs become active
 function refreshChartsInActiveTab(tabId) {
@@ -796,6 +696,502 @@ window.dashboardFunctions = {
     initializeCharts,
     animateNumbers
 };
+
+// Advanced ROI Calculator Functions
+function initializeAdvancedROICalculator() {
+    const investmentSlider = document.getElementById('investmentAmount');
+    const periodSlider = document.getElementById('investmentPeriod');
+    const riskSelect = document.getElementById('riskTolerance');
+    const marketGrowthSlider = document.getElementById('marketGrowth');
+    const competitionSlider = document.getElementById('competitionFactor');
+    const regulatorySlider = document.getElementById('regulatoryRisk');
+    const platformOptions = document.querySelectorAll('.platform-option');
+
+    // Initialize slider values and events
+    if (investmentSlider) {
+        investmentSlider.addEventListener('input', updateCalculatorValues);
+        updateSliderValue('investmentAmount', 'investmentAmountValue', '₹', ' Cr');
+    }
+    
+    if (periodSlider) {
+        periodSlider.addEventListener('input', updateCalculatorValues);
+        updateSliderValue('investmentPeriod', 'investmentPeriodValue', '', ' Years');
+    }
+    
+    if (marketGrowthSlider) {
+        marketGrowthSlider.addEventListener('input', updateCalculatorValues);
+        updateSliderValue('marketGrowth', 'marketGrowthValue', '+', '%');
+    }
+    
+    if (competitionSlider) {
+        competitionSlider.addEventListener('input', updateCalculatorValues);
+        updateSliderValue('competitionFactor', 'competitionFactorValue', '', '%');
+    }
+    
+    if (regulatorySlider) {
+        regulatorySlider.addEventListener('input', updateCalculatorValues);
+        updateSliderValue('regulatoryRisk', 'regulatoryRiskValue', '', '%');
+    }
+
+    if (riskSelect) {
+        riskSelect.addEventListener('change', updateCalculatorValues);
+    }
+
+    // Platform selection
+    platformOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            platformOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            calculatorData.currentPlatform = option.getAttribute('data-platform');
+            updateCalculatorValues();
+        });
+    });
+
+    // Initialize interactive charts
+    createInteractiveCharts();
+    
+    // Initial calculation
+    updateCalculatorValues();
+}
+
+function updateSliderValue(sliderId, valueId, prefix = '', suffix = '') {
+    const slider = document.getElementById(sliderId);
+    const valueDisplay = document.getElementById(valueId);
+    
+    if (slider && valueDisplay) {
+        const value = parseInt(slider.value);
+        const displayValue = value >= 0 ? prefix + value.toLocaleString() + suffix : value + suffix;
+        valueDisplay.textContent = displayValue;
+        
+        // Update slider background
+        const percentage = ((value - slider.min) / (slider.max - slider.min)) * 100;
+        slider.style.background = `linear-gradient(to right, var(--helium-primary) 0%, var(--helium-primary) ${percentage}%, var(--border-color) ${percentage}%, var(--border-color) 100%)`;
+    }
+}
+
+function updateCalculatorValues() {
+    // Get current values
+    const investmentSlider = document.getElementById('investmentAmount');
+    const periodSlider = document.getElementById('investmentPeriod');
+    const riskSelect = document.getElementById('riskTolerance');
+    const marketGrowthSlider = document.getElementById('marketGrowth');
+    const competitionSlider = document.getElementById('competitionFactor');
+    const regulatorySlider = document.getElementById('regulatoryRisk');
+
+    if (investmentSlider) calculatorData.investmentAmount = parseInt(investmentSlider.value);
+    if (periodSlider) calculatorData.investmentPeriod = parseInt(periodSlider.value);
+    if (riskSelect) calculatorData.riskTolerance = riskSelect.value;
+    if (marketGrowthSlider) calculatorData.marketGrowth = parseInt(marketGrowthSlider.value);
+    if (competitionSlider) calculatorData.competitionFactor = parseInt(competitionSlider.value);
+    if (regulatorySlider) calculatorData.regulatoryRisk = parseInt(regulatorySlider.value);
+
+    // Update slider displays
+    updateSliderValue('investmentAmount', 'investmentAmountValue', '₹', ' Cr');
+    updateSliderValue('investmentPeriod', 'investmentPeriodValue', '', ' Years');
+    updateSliderValue('marketGrowth', 'marketGrowthValue', calculatorData.marketGrowth >= 0 ? '+' : '', '%');
+    updateSliderValue('competitionFactor', 'competitionFactorValue', '', '%');
+    updateSliderValue('regulatoryRisk', 'regulatoryRiskValue', '', '%');
+
+    // Calculate results
+    calculateAdvancedROI();
+    
+    // Update charts
+    updateInteractiveCharts();
+    
+    // Update timestamp
+    const timestamp = document.getElementById('resultsTimestamp');
+    if (timestamp) {
+        timestamp.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+    }
+}
+
+function calculateAdvancedROI() {
+    const baseMultiplier = calculatorData.platformMultipliers[calculatorData.currentPlatform];
+    const riskMultiplier = getRiskMultiplier(calculatorData.riskTolerance);
+    const marketFactor = 1 + (calculatorData.marketGrowth / 100);
+    const competitionFactor = 1 + (calculatorData.competitionFactor / 100);
+    const regulatoryFactor = 1 + (calculatorData.regulatoryRisk / 100);
+    
+    // Calculate adjusted ROI multiplier
+    const adjustedMultiplier = baseMultiplier * marketFactor * competitionFactor * regulatoryFactor * riskMultiplier;
+    
+    // Calculate returns over time
+    const totalReturns = calculatorData.investmentAmount * Math.pow(adjustedMultiplier, calculatorData.investmentPeriod / 3);
+    const netProfit = totalReturns - calculatorData.investmentAmount;
+    const annualROI = (Math.pow(totalReturns / calculatorData.investmentAmount, 1 / calculatorData.investmentPeriod) - 1) * 100;
+    const profitMargin = (netProfit / totalReturns) * 100;
+    
+    // Update display
+    updateResultDisplay('totalReturns', `₹${Math.round(totalReturns).toLocaleString()} Cr`);
+    updateResultDisplay('netProfit', `₹${Math.round(netProfit).toLocaleString()} Cr`);
+    updateResultDisplay('annualROI', `${annualROI.toFixed(1)}%`);
+    updateResultDisplay('returnsChange', `+${((totalReturns - calculatorData.investmentAmount) / calculatorData.investmentAmount * 100).toFixed(1)}% gain`);
+    updateResultDisplay('profitMargin', `${profitMargin.toFixed(1)}% margin`);
+    updateResultDisplay('roiComparison', `vs 12% market avg`);
+    
+    // Risk assessment
+    const riskScore = calculateRiskScore();
+    updateResultDisplay('riskScore', riskScore.level);
+    updateResultDisplay('riskLevel', riskScore.grade);
+    
+    // Scenario analysis
+    calculateScenarios(adjustedMultiplier);
+}
+
+function getRiskMultiplier(riskTolerance) {
+    switch (riskTolerance) {
+        case 'conservative': return 0.85;
+        case 'moderate': return 1.0;
+        case 'aggressive': return 1.15;
+        default: return 1.0;
+    }
+}
+
+function calculateRiskScore() {
+    const platformRisk = calculatorData.currentPlatform === 'jiohotstar' ? 0.1 : 0.3;
+    const marketRisk = Math.abs(calculatorData.marketGrowth) / 100;
+    const competitionRisk = Math.abs(calculatorData.competitionFactor) / 100;
+    const regulatoryRisk = Math.abs(calculatorData.regulatoryRisk) / 100;
+    
+    const totalRisk = (platformRisk + marketRisk + competitionRisk + regulatoryRisk) / 4;
+    
+    if (totalRisk < 0.15) return { level: 'Low', grade: 'AAA Grade' };
+    if (totalRisk < 0.25) return { level: 'Medium', grade: 'AA Grade' };
+    return { level: 'High', grade: 'A Grade' };
+}
+
+function calculateScenarios(baseMultiplier) {
+    const optimisticMultiplier = baseMultiplier * 1.2;
+    const pessimisticMultiplier = baseMultiplier * 0.8;
+    
+    // Best case
+    const bestReturns = calculatorData.investmentAmount * Math.pow(optimisticMultiplier, calculatorData.investmentPeriod / 3);
+    const bestROI = ((bestReturns - calculatorData.investmentAmount) / calculatorData.investmentAmount) * 100;
+    
+    // Most likely (current calculation)
+    const realisticReturns = calculatorData.investmentAmount * Math.pow(baseMultiplier, calculatorData.investmentPeriod / 3);
+    const realisticROI = ((realisticReturns - calculatorData.investmentAmount) / calculatorData.investmentAmount) * 100;
+    
+    // Worst case
+    const worstReturns = calculatorData.investmentAmount * Math.pow(pessimisticMultiplier, calculatorData.investmentPeriod / 3);
+    const worstROI = ((worstReturns - calculatorData.investmentAmount) / calculatorData.investmentAmount) * 100;
+    
+    // Update scenario displays
+    updateResultDisplay('bestCaseReturns', `₹${Math.round(bestReturns).toLocaleString()} Cr`);
+    updateResultDisplay('bestCaseROI', `${bestROI.toFixed(0)}%`);
+    updateResultDisplay('realisticReturns', `₹${Math.round(realisticReturns).toLocaleString()} Cr`);
+    updateResultDisplay('realisticROI', `${realisticROI.toFixed(0)}%`);
+    updateResultDisplay('worstCaseReturns', `₹${Math.round(worstReturns).toLocaleString()} Cr`);
+    updateResultDisplay('worstCaseROI', `${worstROI.toFixed(0)}%`);
+}
+
+function updateResultDisplay(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.textContent = value;
+        
+        // Add animation
+        element.style.animation = 'none';
+        element.offsetHeight; // Trigger reflow
+        element.style.animation = 'pulse 0.3s ease-in-out';
+    }
+}
+
+function createInteractiveCharts() {
+    createROIProjectionChart();
+    createRiskReturnChart();
+    createInvestmentBreakdownChart();
+    createScenarioComparisonChart();
+}
+
+function createROIProjectionChart() {
+    const ctx = document.getElementById('roiProjectionChart');
+    if (!ctx) return;
+
+    const years = Array.from({length: calculatorData.investmentPeriod}, (_, i) => i + 1);
+    const multiplier = calculatorData.platformMultipliers[calculatorData.currentPlatform];
+    
+    const data = {
+        labels: years.map(y => `Year ${y}`),
+        datasets: [{
+            label: 'Investment Value',
+            data: years.map(y => calculatorData.investmentAmount * Math.pow(multiplier, y / 3)),
+            borderColor: '#EE5441',
+            backgroundColor: 'rgba(238, 84, 65, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4
+        }]
+    };
+
+    charts.roiProjection = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + value.toLocaleString() + ' Cr';
+                        }
+                    }
+                }
+            },
+            animation: {
+                duration: 1000
+            }
+        }
+    });
+}
+
+function createRiskReturnChart() {
+    const ctx = document.getElementById('riskReturnChart');
+    if (!ctx) return;
+
+    const platforms = Object.entries(platformData);
+    const bubbleData = platforms.map(([name, data]) => ({
+        x: data.marketShare, // Risk proxy
+        y: data.roiMultiplier * 100 - 100, // Return percentage
+        r: data.marketShare / 2,
+        label: name
+    }));
+
+    const data = {
+        datasets: [{
+            label: 'Risk vs Return',
+            data: bubbleData,
+            backgroundColor: platforms.map(([_, data]) => data.color + '80'),
+            borderColor: platforms.map(([_, data]) => data.color),
+            borderWidth: 2
+        }]
+    };
+
+    charts.riskReturn = new Chart(ctx, {
+        type: 'bubble',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(context) {
+                            return bubbleData[context[0].dataIndex].label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Market Share (%)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Return (%)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createInvestmentBreakdownChart() {
+    const ctx = document.getElementById('investmentBreakdownChart');
+    if (!ctx) return;
+
+    const data = {
+        labels: ['Principal', 'Market Growth', 'Platform Premium', 'Risk Adjustment'],
+        datasets: [{
+            data: [60, 25, 10, 5],
+            backgroundColor: ['#EE5441', '#FF9500', '#38A169', '#3182CE'],
+            borderWidth: 0
+        }]
+    };
+
+    charts.investmentBreakdown = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+
+function createScenarioComparisonChart() {
+    const ctx = document.getElementById('scenarioComparisonChart');
+    if (!ctx) return;
+
+    const data = {
+        labels: ['Best Case', 'Most Likely', 'Worst Case'],
+        datasets: [{
+            label: 'ROI %',
+            data: [134, 95, 56],
+            backgroundColor: ['#38A169', '#3182CE', '#D69E2E'],
+            borderRadius: 8,
+            borderSkipped: false
+        }]
+    };
+
+    charts.scenarioComparison = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function updateInteractiveCharts() {
+    // Update ROI Projection Chart
+    if (charts.roiProjection) {
+        const years = Array.from({length: calculatorData.investmentPeriod}, (_, i) => i + 1);
+        const multiplier = calculatorData.platformMultipliers[calculatorData.currentPlatform];
+        
+        charts.roiProjection.data.labels = years.map(y => `Year ${y}`);
+        charts.roiProjection.data.datasets[0].data = years.map(y => 
+            calculatorData.investmentAmount * Math.pow(multiplier, y / 3)
+        );
+        charts.roiProjection.update('none');
+    }
+}
+
+// Action Button Functions
+function generateInvestmentReport() {
+    const reportData = {
+        platform: calculatorData.currentPlatform,
+        investment: calculatorData.investmentAmount,
+        period: calculatorData.investmentPeriod,
+        projectedReturns: document.getElementById('totalReturns').textContent,
+        roi: document.getElementById('annualROI').textContent,
+        riskLevel: document.getElementById('riskScore').textContent
+    };
+    
+    // Create and download report
+    const reportContent = `
+    INVESTMENT ANALYSIS REPORT
+    ========================
+    
+    Platform: ${reportData.platform.toUpperCase()}
+    Investment Amount: ₹${reportData.investment} Crores
+    Investment Period: ${reportData.period} Years
+    
+    PROJECTED RESULTS:
+    - Total Returns: ${reportData.projectedReturns}
+    - Annual ROI: ${reportData.roi}
+    - Risk Level: ${reportData.riskLevel}
+    
+    Generated on: ${new Date().toLocaleString()}
+    `;
+    
+    const blob = new Blob([reportContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `investment_report_${calculatorData.currentPlatform}_${Date.now()}.txt`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+function compareAllPlatforms() {
+    alert('Platform comparison feature coming soon! This will show side-by-side analysis of all platforms.');
+}
+
+function shareCalculation() {
+    const shareData = {
+        title: 'India Media Investment Analysis',
+        text: `Check out this ROI analysis: ${calculatorData.currentPlatform} with ${document.getElementById('annualROI').textContent} annual ROI`,
+        url: window.location.href
+    };
+    
+    if (navigator.share) {
+        navigator.share(shareData);
+    } else {
+        // Fallback to copying URL
+        navigator.clipboard.writeText(window.location.href);
+        alert('Calculation URL copied to clipboard!');
+    }
+}
+
+function resetCalculator() {
+    // Reset to default values
+    calculatorData = {
+        currentPlatform: 'jiohotstar',
+        investmentAmount: 1000,
+        investmentPeriod: 3,
+        riskTolerance: 'moderate',
+        marketGrowth: 29,
+        competitionFactor: -5,
+        regulatoryRisk: -2,
+        platformMultipliers: {
+            jiohotstar: 1.95,
+            amazon: 1.40,
+            netflix: 1.20
+        }
+    };
+    
+    // Reset UI elements
+    const investmentSlider = document.getElementById('investmentAmount');
+    const periodSlider = document.getElementById('investmentPeriod');
+    const riskSelect = document.getElementById('riskTolerance');
+    const marketGrowthSlider = document.getElementById('marketGrowth');
+    const competitionSlider = document.getElementById('competitionFactor');
+    const regulatorySlider = document.getElementById('regulatoryRisk');
+    
+    if (investmentSlider) investmentSlider.value = 1000;
+    if (periodSlider) periodSlider.value = 3;
+    if (riskSelect) riskSelect.value = 'moderate';
+    if (marketGrowthSlider) marketGrowthSlider.value = 29;
+    if (competitionSlider) competitionSlider.value = -5;
+    if (regulatorySlider) regulatorySlider.value = -2;
+    
+    // Reset platform selection
+    document.querySelectorAll('.platform-option').forEach(option => {
+        option.classList.remove('selected');
+        if (option.getAttribute('data-platform') === 'jiohotstar') {
+            option.classList.add('selected');
+        }
+    });
+    
+    // Recalculate
+    updateCalculatorValues();
+}
 
 // Console welcome message
 console.log(`
