@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Media Mix Model Dashboard - Jio/Hotstar Investment Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/controls/OrbitControls.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <h1>India Media Mix Model Dashboard</h1>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">$30B</span>
+                        <span class="stat-label">Market Size 2024</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">41%</span>
+                        <span class="stat-label">Digital Share</span>
+                    </div>
+                    <div class="stat-item highlight">
+                        <span class="stat-value">AAA</span>
+                        <span class="stat-label">JioHotstar Grade</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <div class="container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="overview">Market Overview</button>
+                <button class="tab-btn" data-tab="roi-analysis">ROI Analysis</button>
+                <button class="tab-btn" data-tab="platform-comparison">Platform Comparison</button>
+                <button class="tab-btn" data-tab="3d-visualization">3D Visualization</button>
+                <button class="tab-btn" data-tab="investment-insights">Investment Insights</button>
+                <button class="tab-btn" data-tab="mmm-framework">MMM Framework</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="section-header">
+                    <h2><i class="fas fa-globe-asia"></i> India Media Landscape Overview</h2>
+                    <p>Comprehensive analysis of India's $30B media market with focus on digital transformation</p>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card primary">
+                        <div class="metric-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Market Leader</h3>
+                            <div class="metric-value">JioHotstar</div>
+                            <div class="metric-subtitle">31% Market Share • 600M Users</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> 87% Growth
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Digital Dominance</h3>
+                            <div class="metric-value">41%</div>
+                            <div class="metric-subtitle">vs TV's 33% Share</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> +29% Growth
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Mobile First</h3>
+                            <div class="metric-value">96%</div>
+                            <div class="metric-subtitle">Mobile Internet Usage</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> 6.8h Daily
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Investment Grade</h3>
+                            <div class="metric-value">AAA</div>
+                            <div class="metric-subtitle">JioHotstar Rating</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-star"></i> Highest Grade
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <h3>Market Share Distribution</h3>
+                        <canvas id="marketShareChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Growth Trajectory</h3>
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="insight-cards">
+                    <div class="insight-card">
+                        <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                        <p>Digital advertising has officially surpassed television as the largest segment, capturing 41% of total ad spend compared to TV's 33% share, marking a historic shift in India's media landscape.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4><i class="fas fa-rocket"></i> Growth Driver</h4>
+                        <p>JioHotstar's merger created the world's second-largest streaming platform with 600M users, demonstrating unprecedented scale and technical capabilities with 61.2M peak concurrency.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROI Analysis Tab -->
+            <div id="roi-analysis" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-calculator"></i> ROI Analysis & Performance Metrics</h2>
+                    <p>Comprehensive ROI comparison highlighting JioHotstar's superior investment potential</p>
+                </div>
+
+                <div class="roi-comparison-grid">
+                    <div class="roi-card jiohotstar">
+                        <div class="roi-header">
+                            <h3>JioHotstar</h3>
+                            <div class="roi-grade aaa">AAA</div>
+                        </div>
+                        <div class="roi-metrics">
+                            <div class="roi-metric">
+                                <span class="roi-label">ROI Multiplier</span>
+                                <span class="roi-value">1.95x</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Market Share</span>
+                                <span class="roi-value">31%</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Growth Rate</span>
+                                <span class="roi-value">87%</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Investment Score</span>
+                                <span class="roi-value">9.5/10</span>
+                            </div>
+                        </div>
+                        <div class="roi-advantages">
+                            <div class="advantage">Sports Content Premium: +40%</div>
+                            <div class="advantage">Regional Reach Advantage: +25%</div>
+                            <div class="advantage">Mobile Optimization: +30%</div>
+                        </div>
+                    </div>
+
+                    <div class="roi-card netflix">
+                        <div class="roi-header">
+                            <h3>Netflix</h3>
+                            <div class="roi-grade a">A</div>
+                        </div>
+                        <div class="roi-metrics">
+                            <div class="roi-metric">
+                                <span class="roi-label">ROI Multiplier</span>
+                                <span class="roi-value">1.20x</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Market Share</span>
+                                <span class="roi-value">16%</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Growth Rate</span>
+                                <span class="roi-value">49%</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Investment Score</span>
+                                <span class="roi-value">7.0/10</span>
+                            </div>
+                        </div>
+                        <div class="roi-disadvantages">
+                            <div class="disadvantage">Regional Content Gap: -15%</div>
+                            <div class="disadvantage">Price Barrier: -20%</div>
+                        </div>
+                    </div>
+
+                    <div class="roi-card amazon">
+                        <div class="roi-header">
+                            <h3>Amazon Prime</h3>
+                            <div class="roi-grade aa">AA</div>
+                        </div>
+                        <div class="roi-metrics">
+                            <div class="roi-metric">
+                                <span class="roi-label">ROI Multiplier</span>
+                                <span class="roi-value">1.40x</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Market Share</span>
+                                <span class="roi-value">23%</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Growth Rate</span>
+                                <span class="roi-value">25%</span>
+                            </div>
+                            <div class="roi-metric">
+                                <span class="roi-label">Investment Score</span>
+                                <span class="roi-value">8.0/10</span>
+                            </div>
+                        </div>
+                        <div class="roi-advantages">
+                            <div class="advantage">E-commerce Synergy: +25%</div>
+                            <div class="advantage">Global Backing: +20%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roi-calculator">
+                    <h3><i class="fas fa-calculator"></i> Interactive ROI Calculator</h3>
+                    <div class="calculator-controls">
+                        <div class="control-group">
+                            <label>Investment Amount (₹ Crores)</label>
+                            <input type="range" id="investmentSlider" min="100" max="10000" value="1000" step="100">
+                            <span id="investmentValue">₹1,000 Cr</span>
+                        </div>
+                        <div class="control-group">
+                            <label>Platform Selection</label>
+                            <select id="platformSelect">
+                                <option value="jiohotstar">JioHotstar (1.95x ROI)</option>
+                                <option value="amazon">Amazon Prime (1.40x ROI)</option>
+                                <option value="netflix">Netflix (1.20x ROI)</option>
+                                <option value="zee5">Zee5 (1.15x ROI)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="calculator-results">
+                        <div class="result-item">
+                            <span class="result-label">Projected Returns</span>
+                            <span class="result-value" id="projectedReturns">₹1,950 Cr</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Net Profit</span>
+                            <span class="result-value" id="netProfit">₹950 Cr</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">ROI Percentage</span>
+                            <span class="result-value" id="roiPercentage">95%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Comparison Tab -->
+            <div id="platform-comparison" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-balance-scale"></i> Comprehensive Platform Comparison</h2>
+                    <p>Detailed analysis of all major platforms with performance benchmarks</p>
+                </div>
+
+                <div class="comparison-table-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>Market Share</th>
+                                <th>Subscribers</th>
+                                <th>ROI Multiplier</th>
+                                <th>Growth Rate</th>
+                                <th>Investment Grade</th>
+                                <th>Key Strengths</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="platform-row jiohotstar-row">
+                                <td class="platform-name">
+                                    <strong>JioHotstar</strong>
+                                    <span class="leader-badge">Market Leader</span>
+                                </td>
+                                <td><span class="metric-highlight">31%</span></td>
+                                <td>600M</td>
+                                <td><span class="roi-highlight">1.95x</span></td>
+                                <td><span class="growth-positive">87%</span></td>
+                                <td><span class="grade-aaa">AAA</span></td>
+                                <td>Sports Content, Regional Reach, Technical Excellence</td>
+                            </tr>
+                            <tr class="platform-row">
+                                <td class="platform-name"><strong>Amazon Prime</strong></td>
+                                <td>23%</td>
+                                <td>200M</td>
+                                <td>1.40x</td>
+                                <td><span class="growth-moderate">25%</span></td>
+                                <td><span class="grade-aa">AA</span></td>
+                                <td>E-commerce Integration, Global Content</td>
+                            </tr>
+                            <tr class="platform-row">
+                                <td class="platform-name"><strong>Netflix</strong></td>
+                                <td>16%</td>
+                                <td>35.9M</td>
+                                <td>1.20x</td>
+                                <td><span class="growth-moderate">49%</span></td>
+                                <td><span class="grade-a">A</span></td>
+                                <td>Premium Content, Global Brand</td>
+                            </tr>
+                            <tr class="platform-row">
+                                <td class="platform-name"><strong>Zee5</strong></td>
+                                <td>11%</td>
+                                <td>6.5M</td>
+                                <td>1.15x</td>
+                                <td><span class="growth-slow">15%</span></td>
+                                <td><span class="grade-bbb">BBB</span></td>
+                                <td>Regional Content, Local Languages</td>
+                            </tr>
+                            <tr class="platform-row">
+                                <td class="platform-name"><strong>Sony LIV</strong></td>
+                                <td>4%</td>
+                                <td>33.3M</td>
+                                <td>1.10x</td>
+                                <td><span class="growth-slow">10%</span></td>
+                                <td><span class="grade-bb">BB</span></td>
+                                <td>Sports Exclusive, Sony Content</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <h3>Performance Radar Chart</h3>
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>ROI vs Market Share</h3>
+                        <canvas id="bubbleChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Visualization Tab -->
+            <div id="3d-visualization" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-cube"></i> 3D Market Visualization</h2>
+                    <p>Interactive 3D representation of market dynamics and platform performance</p>
+                </div>
+
+                <div class="visualization-controls">
+                    <button class="viz-btn active" data-viz="market-cube">Market Cube</button>
+                    <button class="viz-btn" data-viz="roi-sphere">ROI Sphere</button>
+                    <button class="viz-btn" data-viz="growth-tower">Growth Tower</button>
+                </div>
+
+                <div class="viz-container">
+                    <div id="threejs-container"></div>
+                    <div class="viz-info">
+                        <h4 id="vizTitle">Market Share 3D Cube</h4>
+                        <p id="vizDescription">Interactive 3D visualization showing relative market positions and performance metrics</p>
+                        <div class="viz-legend">
+                            <div class="legend-item jiohotstar">
+                                <span class="legend-color"></span>
+                                <span>JioHotstar - Market Leader</span>
+                            </div>
+                            <div class="legend-item amazon">
+                                <span class="legend-color"></span>
+                                <span>Amazon Prime - Strong Competitor</span>
+                            </div>
+                            <div class="legend-item netflix">
+                                <span class="legend-color"></span>
+                                <span>Netflix - Premium Player</span>
+                            </div>
+                            <div class="legend-item others">
+                                <span class="legend-color"></span>
+                                <span>Others - Niche Players</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Investment Insights Tab -->
+            <div id="investment-insights" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-pie"></i> Investment Insights & Recommendations</h2>
+                    <p>Strategic investment analysis and actionable recommendations for stakeholders</p>
+                </div>
+
+                <div class="investment-summary">
+                    <div class="summary-card primary">
+                        <h3><i class="fas fa-star"></i> Top Investment Opportunity</h3>
+                        <div class="opportunity-details">
+                            <h4>JioHotstar - AAA Investment Grade</h4>
+                            <div class="opportunity-metrics">
+                                <div class="opp-metric">
+                                    <span class="opp-label">Projected ROI</span>
+                                    <span class="opp-value">195%</span>
+                                </div>
+                                <div class="opp-metric">
+                                    <span class="opp-label">Market Position</span>
+                                    <span class="opp-value">#1 Leader</span>
+                                </div>
+                                <div class="opp-metric">
+                                    <span class="opp-label">Growth Trajectory</span>
+                                    <span class="opp-value">Exponential</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3><i class="fas fa-trending-up"></i> Market Trends</h3>
+                        <ul class="trend-list">
+                            <li>Digital advertising surpassed TV (41% vs 33%)</li>
+                            <li>Connected TV growing at 87% annually</li>
+                            <li>Sports content driving 40% premium rates</li>
+                            <li>Regional content becoming critical</li>
+                            <li>Mobile-first platforms dominating</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="investment-reasons">
+                    <h3>Why JioHotstar Leads Investment Attractiveness</h3>
+                    <div class="reasons-grid">
+                        <div class="reason-card">
+                            <div class="reason-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h4>Market Dominance</h4>
+                            <p>31% market share with 600M users, making it the clear market leader with unmatched scale and reach across India.</p>
+                        </div>
+                        <div class="reason-card">
+                            <div class="reason-icon">
+                                <i class="fas fa-football-ball"></i>
+                            </div>
+                            <h4>Sports Content Monopoly</h4>
+                            <p>Exclusive rights to IPL and major cricket tournaments, driving 40% premium in advertising rates and viewer engagement.</p>
+                        </div>
+                        <div class="reason-card">
+                            <div class="reason-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h4>Technical Excellence</h4>
+                            <p>Proven infrastructure handling 61.2M peak concurrency, demonstrating superior technical capabilities and reliability.</p>
+                        </div>
+                        <div class="reason-card">
+                            <div class="reason-icon">
+                                <i class="fas fa-globe-asia"></i>
+                            </div>
+                            <h4>Regional Strength</h4>
+                            <p>Strong regional content portfolio covering 23% of viewership with localized content in multiple Indian languages.</p>
+                        </div>
+                        <div class="reason-card">
+                            <div class="reason-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h4>Mobile-First Approach</h4>
+                            <p>Optimized for India's mobile-first market with 96% mobile internet usage, providing 30% advantage over competitors.</p>
+                        </div>
+                        <div class="reason-card">
+                            <div class="reason-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h4>Exponential Growth</h4>
+                            <p>87% growth rate post-merger, becoming world's second-largest streaming platform within 3 months of launch.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="risk-assessment">
+                    <h3><i class="fas fa-shield-alt"></i> Risk Assessment & Mitigation</h3>
+                    <div class="risk-grid">
+                        <div class="risk-item low">
+                            <div class="risk-level">Low Risk</div>
+                            <div class="risk-factor">Market Position</div>
+                            <div class="risk-description">Strong market leadership with significant barriers to entry</div>
+                        </div>
+                        <div class="risk-item medium">
+                            <div class="risk-level">Medium Risk</div>
+                            <div class="risk-factor">Content Costs</div>
+                            <div class="risk-description">Rising content acquisition costs offset by scale advantages</div>
+                        </div>
+                        <div class="risk-item low">
+                            <div class="risk-level">Low Risk</div>
+                            <div class="risk-factor">Technical Infrastructure</div>
+                            <div class="risk-description">Proven scalability and reliability under peak loads</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MMM Framework Tab -->
+            <div id="mmm-framework" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-calculator"></i> Media Mix Model Framework</h2>
+                    <p>Mathematical foundations and formulas for media mix modeling in India</p>
+                </div>
+
+                <div class="framework-sections">
+                    <div class="framework-card">
+                        <h3><i class="fas fa-function"></i> Core MMM Equation</h3>
+                        <div class="formula-container">
+                            <div class="formula">
+                                Sales<sub>t</sub> = Base_Sales<sub>t</sub> + Σβ<sub>i</sub> × Saturation(Adstock(Media<sub>i,t</sub>)) + Σγ<sub>j</sub> × Control<sub>j,t</sub> + ε<sub>t</sub>
+                            </div>
+                        </div>
+                        <div class="formula-explanation">
+                            <p><strong>Where:</strong></p>
+                            <ul>
+                                <li>Sales<sub>t</sub> = Total sales at time t</li>
+                                <li>Base_Sales<sub>t</sub> = Organic sales without marketing</li>
+                                <li>β<sub>i</sub> = Media channel coefficient</li>
+                                <li>Saturation() = Diminishing returns function</li>
+                                <li>Adstock() = Carryover effects function</li>
+                                <li>Control<sub>j,t</sub> = External factors (seasonality, pricing)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="framework-card">
+                        <h3><i class="fas fa-chart-line"></i> Adstock Transformation</h3>
+                        <div class="formula-container">
+                            <div class="formula">
+                                Adstock<sub>t</sub> = Media<sub>t</sub> + α × Adstock<sub>t-1</sub>
+                            </div>
+                        </div>
+                        <div class="parameter-grid">
+                            <div class="param-item">
+                                <span class="param-label">TV Decay Rate (α)</span>
+                                <span class="param-value">0.6</span>
+                            </div>
+                            <div class="param-item">
+                                <span class="param-label">Digital Decay Rate (α)</span>
+                                <span class="param-value">0.3</span>
+                            </div>
+                            <div class="param-item">
+                                <span class="param-label">TV Max Lag (L)</span>
+                                <span class="param-value">8 weeks</span>
+                            </div>
+                            <div class="param-item">
+                                <span class="param-label">Digital Max Lag (L)</span>
+                                <span class="param-value">4 weeks</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="framework-card">
+                        <h3><i class="fas fa-chart-area"></i> Saturation Curves</h3>
+                        <div class="formula-container">
+                            <div class="formula">
+                                Saturated_Media = Media<sup>n</sup> / (K<sup>n</sup> + Media<sup>n</sup>)
+                            </div>
+                        </div>
+                        <div class="saturation-params">
+                            <div class="param-row">
+                                <span class="param-name">Hill Transformation Parameters:</span>
+                            </div>
+                            <div class="param-grid">
+                                <div class="param-item">
+                                    <span class="param-label">Shape Parameter (n)</span>
+                                    <span class="param-value">1.5-3.0</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Half-saturation (K)</span>
+                                    <span class="param-value">70-85% peak</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="framework-card">
+                        <h3><i class="fas fa-map-marked-alt"></i> India-Specific Parameters</h3>
+                        <div class="india-params">
+                            <div class="param-section">
+                                <h4>Regional Factors</h4>
+                                <div class="param-grid">
+                                    <div class="param-item">
+                                        <span class="param-label">Hindi Viewership</span>
+                                        <span class="param-value">55%</span>
+                                    </div>
+                                    <div class="param-item">
+                                        <span class="param-label">English Viewership</span>
+                                        <span class="param-value">22%</span>
+                                    </div>
+                                    <div class="param-item">
+                                        <span class="param-label">Regional Languages</span>
+                                        <span class="param-value">23%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="param-section">
+                                <h4>Seasonal Multipliers</h4>
+                                <div class="param-grid">
+                                    <div class="param-item">
+                                        <span class="param-label">IPL Season</span>
+                                        <span class="param-value">+35-50%</span>
+                                    </div>
+                                    <div class="param-item">
+                                        <span class="param-label">Festival Season</span>
+                                        <span class="param-value">+20-40%</span>
+                                    </div>
+                                    <div class="param-item">
+                                        <span class="param-label">Monsoon Impact</span>
+                                        <span class="param-value">-15%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="framework-card">
+                        <h3><i class="fas fa-trophy"></i> JioHotstar Optimization Formula</h3>
+                        <div class="formula-container">
+                            <div class="formula">
+                                JioHotstar_ROI = Base_ROI × (1 + Sports_Boost + Regional_Reach + Mobile_Factor)
+                            </div>
+                        </div>
+                        <div class="jio-optimization">
+                            <div class="optimization-grid">
+                                <div class="opt-item">
+                                    <span class="opt-label">Sports Content Boost</span>
+                                    <span class="opt-value">+40%</span>
+                                </div>
+                                <div class="opt-item">
+                                    <span class="opt-label">Regional Reach Advantage</span>
+                                    <span class="opt-value">+25%</span>
+                                </div>
+                                <div class="opt-item">
+                                    <span class="opt-label">Mobile-First Factor</span>
+                                    <span class="opt-value">+30%</span>
+                                </div>
+                                <div class="opt-item total">
+                                    <span class="opt-label">Total ROI Multiplier</span>
+                                    <span class="opt-value">1.95x</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Data Sources</h4>
+                    <ul>
+                        <li>Ipsos Digital Marketing Report 2024-25</li>
+                        <li>FICCI-EY Media & Entertainment Report</li>
+                        <li>PwC India Entertainment Outlook 2024-28</li>
+                        <li>Reliance Industries Annual Report</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Methodology</h4>
+                    <p>Analysis based on comprehensive Media Mix Modeling framework with India-specific parameters, incorporating adstock effects, saturation curves, and regional factors.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Investment Grade</h4>
+                    <p>JioHotstar receives AAA investment grade based on market leadership, technical excellence, and superior ROI potential in India's growing digital media landscape.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 India Media Mix Model Dashboard. Analysis by Helium AI Assistant.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
